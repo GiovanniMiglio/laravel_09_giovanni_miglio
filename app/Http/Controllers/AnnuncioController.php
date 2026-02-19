@@ -10,20 +10,17 @@ class AnnuncioController extends Controller
     {
         return view('annunci.create');
     }
-    
-    public function store(Request $request)
-    {
-        $name = $request->name;
-        $description = $request->description;
-        $price = $request->price;
-        
-        $product = new Product();
-        $product->name = $name;
-        $product->description = $description;
-        $product->price = $price;
-        $product->save();
-        return redirect()->route('annunci.create')->with('success', 'Annuncio creato con successo!');
-    }
+public function store(Request $request)
+{
+    Product::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+    ]);
+
+    return redirect()->route('annunci.create')
+                     ->with('success', 'Annuncio creato con successo!');
+}
         public function index()
         {
             $products = Product::all();
