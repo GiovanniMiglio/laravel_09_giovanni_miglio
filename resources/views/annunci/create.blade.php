@@ -4,28 +4,41 @@
 
 @if(session('success'))
 <div class="alert alert-success">
-    {{ session('success') }}
+{{ session('success') }}
 </div>
 @endif
 
-<form class="bgcustom justify-content-center align-items-center p-4 rounded fs-3" style="width: 50%;" action="{{ route('annunci.store') }}" method="POST">
+<form class="bgcustom justify-content-center align-items-center p-4 rounded fs-3" style="width: 50%;" action="{{ route('annunci.store') }}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="mb-3">
+<label for="img" class="form-label">Immagine dell'articolo</label>
+<input type="file" class="form-control" id="img" name="img" value="{{ old('img') }}">
+</div>
+<div class="mb-3">
 <label for="name" class="form-label">Nome dell'articolo</label>
-<input type="text" class="form-control" id="name" name="name">
+<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+@error('name')
+<div class="alert alert-danger">{{ $message }}</div>
+@enderror
 </div>
 
 <div class="mb-3">
 <label for="description" class="form-label">Descrizione dell'articolo</label>
-<textarea class="form-control" id="description" name="description" rows="4"></textarea>
+<textarea class="form-control" id="description" name="description" rows="4">{{ old('description') }}</textarea>
+@error('description')
+<div class="alert alert-danger">{{ $message }}</div>
+@enderror
 </div>
 
 <div class="mb-3">
 <label for="price" class="form-label">Prezzo dell'articolo</label>
 <div class="input-group">
 <span class="input-group-text">€</span>
-<input type="number" class="form-control" id="price" name="price" step="0.01">
+<input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ old('price') }}">
 </div>
+@error('price')
+<div class="alert alert-danger">{{ $message }}</div>
+@enderror
 </div>
 
 
